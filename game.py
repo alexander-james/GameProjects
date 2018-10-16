@@ -55,11 +55,26 @@ def normalise_input(user_input):
 
     
 def display_room(room):
+    """This function takes a room as an input and nicely displays its name
+    and description. The room argument is a dictionary with entries "name",
+    "description" etc. (see map.py for the definition). The name of the room
+    is printed in all capitals and framed by blank lines. Then follows the
+    description of the room and a blank line again. For example:
 
-    print("\n" + room["name"].upper() +"\n" + room["description"] + "\n")
+    >>> display_room(rooms["Office"])
+    <BLANKLINE>
+    THE GENERAL OFFICE
+    <BLANKLINE>
+    You are standing next to the cashier's till at
+    30-36 Newport Road. The cashier looks at you with hope
+    in their eyes. If you go west you can return to the
+    Queen's Buildings.
+    <BLANKLINE>
+
+    Note: <BLANKLINE> here means that doctest should expect a blank line.
+    """
     
-    #complete!
-    
+    print("\n" + room["name"].upper() + "\n\n" + room["description"] + "\n")
     
 def exit_leads_to(exits, direction):
     """This function takes a dictionary of exits and a direction (a particular
@@ -73,18 +88,25 @@ def exit_leads_to(exits, direction):
     >>> exit_leads_to(rooms["Tutor"]["exits"], "west")
     'Reception'
     """
-
-    leads_to = exits[direction]
-    print('"' + rooms[leads_to]["name"] + '"')
-    
-    
+    room = exits.get(direction)
+    return(rooms[room]["name"])
 
 def print_menu_line(direction, leads_to):
-   
+    """This function prints a line of a menu of exits. It takes two strings: a
+    direction (the name of an exit) and the name of the room into which it
+    leads (leads_to), and should print a menu line in the following format:
+
+    Go <EXIT NAME UPPERCASE> to <where it leads>.
+
+    For example:
+    >>> print_menu_line("east", "you personal tutor's office")
+    Go EAST to you personal tutor's office.
+    >>> print_menu_line("south", "MJ and Simon's room")
+    Go SOUTH to MJ and Simon's room.
+    """
     print("Go " + direction.upper() + " to " + leads_to + ".")
-    
-    #complete!
-    
+
+
 def print_menu(exits):
     """This function displays the menu of available exits to the player. The
     argument exits is a dictionary of exits as exemplified in map.py. The
@@ -101,10 +123,11 @@ def print_menu(exits):
     Where do you want to go?
     """
     print("You can:")
-    
-    for direction,leads_to in exits.items():
-        print_menu_line(direction, rooms[leads_to]["name"])
-        
+
+    for exit in exits:
+        print_menu_line(exit, exit_leads_to(exits, exit))
+     
+
     print("Where do you want to go?")
 
 
@@ -124,7 +147,7 @@ def is_valid_exit(exits, user_input):
     >>> is_valid_exit(rooms["Parking"]["exits"], "east")
     True
     """
-    pass
+    
 
 
 def menu(exits):
@@ -138,20 +161,23 @@ def menu(exits):
     prompted, repeatedly, until a correct choice is entered."""
 
     # Repeat until the player enter a valid choice
+   
     while True:
-        pass
+     
         # COMPLETE THIS PART:
         
         # Display menu
-
+        print_menu(exits)
+        
         # Read player's input
-
+        selected = input()
         # Normalise the input
-
+        #normalise_input(selected)
         # Check if the input makes sense (is valid exit)
-            # If so, return the player's choice
-
-
+        #is valid exit(normalise_input)
+        # If so, return the player's choice
+        
+  
 
 
 def move(exits, direction):
@@ -166,7 +192,8 @@ def move(exits, direction):
     >>> move(rooms["Reception"]["exits"], "west") == rooms["Office"]
     False
     """
-    pass
+    
+    
 
 
 # This is the entry point of our program
