@@ -172,9 +172,9 @@ def menu(exits):
         # Read player's input
         selected = input()
         # Normalise the input
-        #normalise_input(selected)
+        #selected_normal = normalise_input(selected)
         # Check if the input makes sense (is valid exit)
-        #is valid exit(normalise_input)
+        #is valid exit(selected_normal)
         # If so, return the player's choice
         
   
@@ -192,7 +192,9 @@ def move(exits, direction):
     >>> move(rooms["Reception"]["exits"], "west") == rooms["Office"]
     False
     """
-    
+    moving_to = exits[direction]
+
+    return rooms[moving_to]
     
 
 
