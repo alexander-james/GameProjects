@@ -25,10 +25,15 @@ def list_of_items(items):
 
     """
     list_of_items = []
+    #creates list
     for item in items:
+        #searches values in items
         item = (item["name"])
+        #finds item name form items.py
         list_of_items.append(item)
-    return (", ".join(list_of_items))                 
+        #adds to list
+    return (", ".join(list_of_items))
+    #converts list to string removing square brackets
     
 
 
@@ -54,7 +59,11 @@ def print_room_items(room):
     Note: <BLANKLINE> here means that doctest should expect a blank line.
 
     """
-    pass
+    contained = room["items"]
+    if contained != []:
+        print("There is " + list_of_items(contained) + " here." + "\n")
+        
+        
 
 
 def print_inventory_items(items):
