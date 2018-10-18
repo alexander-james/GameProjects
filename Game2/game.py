@@ -202,6 +202,7 @@ def print_menu(exits, room_items, inv_items):
     What do you want to do?
 
     """
+    print("your current weight is " + str(carrying_capacity) + "KG.")
     print("You can:")
     # Iterate over available exits
     for direction in exits:
@@ -209,9 +210,9 @@ def print_menu(exits, room_items, inv_items):
         print_exit(direction, exit_leads_to(exits, direction))
 
     for room_item in room_items:
-        print("TAKE " + room_item["id"].upper() + " to take " + room_item["name"])
+        print("TAKE " + room_item["id"].upper() + " to take " + room_item["name"] + " that weighs " + str(room_item["weight"]) + "KG.")
     for inv_item in inv_items:
-        print("DROP " + inv_item["id"].upper() + " to drop " + inv_item["name"])
+        print("DROP " + inv_item["id"].upper() + " to drop " + inv_item["name"] + " that weighs " + str(inv_item["weight"]) + "KG.")
     print("What do you want to do?")
 
 
@@ -314,7 +315,7 @@ def execute_drop(item_id):
     if dropping not in (current_room["items"]) and dropping != "nil":
         inventory.remove(dropping)
         carrying_capacity = carrying_capacity - dropping["weight"]
-        current_room.append(dropping)
+        current_room["items"].append(dropping)
     else:
             print("You can't drop that item")
   
@@ -394,7 +395,9 @@ def move(exits, direction):
 def main():
 
     # Main game loop
-    while True:
+    game_progress = False
+    
+    while game_progress == False:
         # Display game status (room description, inventory etc.)
         print_room(current_room)
         print_inventory_items(inventory)
@@ -404,8 +407,16 @@ def main():
 
         # Execute the player's command
         execute_command(command)
+        game_progress = completion(current_room)
+        
+    
+    print("\n" + "You've completed the game!" + "\n")
 
-
+def completion(current_room):
+    if current_room["name"] == "the general office" and item_laptop in current_room["items"] and item_id in current_room["items"] and item_handbook in current_room["items"]:
+        return True
+    else:
+        return False
 
 # Are we being run as a script? If so, run main().
 # '__main__' is the name of the scope in which top-level code executes.

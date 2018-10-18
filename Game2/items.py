@@ -6,7 +6,7 @@ item_id = {
     "description":
     """You new shiny student ID card. Expires 1 June 2017.
 You wonder why they have printed a suicide hotline number on it?...""",
-    "weight": 1
+    "weight": 0.5
 }
 
 item_laptop = {
