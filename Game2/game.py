@@ -76,8 +76,12 @@ def print_inventory_items(items):
     <BLANKLINE>
 
     """
-    pass
-
+    inventory = list_of_items(items)
+    if list_of_items == []:
+        print("you don't have any items right now" + "\n")
+    else:
+        print("You have " + inventory + "." + "\n")
+    
 
 def print_room(room):
     """This function takes a room as an input and nicely displays its name
