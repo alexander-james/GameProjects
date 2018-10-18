@@ -24,7 +24,12 @@ def list_of_items(items):
     'money, a student handbook, laptop'
 
     """
-    pass
+    list_of_items = []
+    for item in items:
+        item = (item["name"])
+        list_of_items.append(item)
+    return (", ".join(list_of_items))                 
+    
 
 
 def print_room_items(room):
