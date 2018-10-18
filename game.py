@@ -17,9 +17,15 @@ def remove_punct(text):
     >>> remove_punct(",go!So.?uTh")
     'goSouTh'
     """
-    pass # The pass statement does nothing. Replace it with the body of your function.
-    
-    
+
+    trans = text
+
+    for c in string.punctuation:
+        trans= trans.replace(c, "")
+       
+    text = trans
+    return text
+
 def remove_spaces(text):
     """This function is used to remove leading and trailing spaces from a string.
     It takes a string and returns a new string with does not have leading and
@@ -36,7 +42,10 @@ def remove_spaces(text):
     >>> remove_spaces("   ")
     ''
     """
-    pass
+    place = text
+    text = place.strip()
+    return text
+
 
 
 def normalise_input(user_input):
@@ -51,7 +60,10 @@ def normalise_input(user_input):
     >>> normalise_input("HELP!!!!!!!")
     'help'
     """
-    pass
+    normal = user_input.lower()
+    normal = remove_punct(normal)
+    normal = remove_spaces(normal)
+    return normal
 
     
 def display_room(room):
@@ -174,12 +186,12 @@ def menu(exits):
         print_menu(exits)
         
         # Read player's input
-        selected = input()
+        user_input = input()
         # Normalise the input
-        #selected_normal = normalise_input(selected)
+        selected_normal = normalise_input(user_input)
         # Check if the input makes sense (is valid exit)
-        if is_valid_exit(exits, selected) == True:
-            return selected
+        if is_valid_exit(exits, selected_normal) == True:
+            return selected_normal
         else:
             print("please enter a valid exit!")
              
