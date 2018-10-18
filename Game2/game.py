@@ -208,10 +208,10 @@ def print_menu(exits, room_items, inv_items):
         # Print the exit name and where it leads to
         print_exit(direction, exit_leads_to(exits, direction))
 
-    #
-    # COMPLETE ME!
-    #
-    
+    for room_item in room_items:
+        print("TAKE " + room_item["id"].upper() + " to take " + room_item["name"])
+    for inv_item in inv_items:
+        print("DROP " + inv_item["id"].upper() + " to drop " + inv_item["name"])
     print("What do you want to do?")
 
 
@@ -240,25 +240,84 @@ def execute_go(direction):
     (and prints the name of the room into which the player is
     moving). Otherwise, it prints "You cannot go there."
     """
-    pass
-
-
+    global current_room
+    
+    if is_valid_exit(current_room["exits"], direction) == True:
+        current_room = (move(current_room["exits"], direction))
+    else:
+        print("You cannot go there.")
+        
 def execute_take(item_id):
     """This function takes an item_id as an argument and moves this item from the
     list of items in the current room to the player's inventory. However, if
     there is no such item in the room, this function prints
     "You cannot take that."
-    """
-    pass
+     """
+
     
+    global carrying_capacity
+
+
+    # Create a changeable list of all items
+    all_items = []
+    for inv_item in inventory:
+        all_items.append(inv_item)
+    for room_item in current_room["items"]:
+        all_items.append(room_item)
+
+   #determines which items exist in the game currently 
+    for item in all_items:
+        if item_id == item["id"]:
+            taking = item
+            break
+        else: taking = "nil"
+
+    if taking not in inventory and taking != "nil" and (carrying_capacity + taking["weight"]) <= 3:
+        
+        current_room["items"].remove(taking)
+        
+        carrying_capacity = carrying_capacity + taking["weight"]
+        
+        inventory.append(taking)
+        
+    #remove the item from the list, add the capacity and add to inventory
+        
+    elif taking not in inventory and taking != "nil" and (carrying_capacity + taking["weight"]) >= 3:
+        
+        print("You cannot carry this. You'll exceed 3KG.")
+        
+    elif taking in inventory:
+        
+        print("You already have " + taking["name"] + " in your inventory.")
+        
+    else:
+        
+        print("You cannot take that.") 
+
+ 
 
 def execute_drop(item_id):
     """This function takes an item_id as an argument and moves this item from the
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
-    pass
+    global carrying_capacity
     
+    for inventory_item in inventory:
+        if item_id == inventory_item["id"]:
+            dropping = inventory_item
+            break
+        else:
+            dropping = "nil"
+
+            
+    if dropping not in (current_room["items"]) and dropping != "nil":
+        inventory.remove(dropping)
+        carrying_capacity = carrying_capacity - dropping["weight"]
+        current_room.append(dropping)
+    else:
+            print("You can't drop that item")
+  
 
 def execute_command(command):
     """This function takes a command (a list of words as returned by
