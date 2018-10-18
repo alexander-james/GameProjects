@@ -136,10 +136,10 @@ def print_room(room):
     # Display room description
     print(room["description"])
     print()
-
-    #
-    # COMPLETE ME!
-    #
+    print_room_items(room)
+        
+    
+    
 
 def exit_leads_to(exits, direction):
     """This function takes a dictionary of exits and a direction (a particular
