@@ -147,6 +147,10 @@ def is_valid_exit(exits, user_input):
     >>> is_valid_exit(rooms["Parking"]["exits"], "east")
     True
     """
+    if user_input in exits:
+        return True
+    else:
+        return False
     
 
 
@@ -174,7 +178,12 @@ def menu(exits):
         # Normalise the input
         #selected_normal = normalise_input(selected)
         # Check if the input makes sense (is valid exit)
-        #is valid exit(selected_normal)
+        if is_valid_exit(exits, selected) == True:
+            return selected
+        else:
+            print("please enter a valid exit!")
+             
+        
         # If so, return the player's choice
         
   
