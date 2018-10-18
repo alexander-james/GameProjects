@@ -27,9 +27,14 @@ def filter_words(words, skip_words):
     ['go', 'passage', 'south']
 
     """
-    pass
 
-    
+    filtered = []
+
+    for word in words:
+               if word not in skip_words:
+                   filtered.append(word)
+    return filtered
+               
 def remove_punct(text):
     """This function is used to remove all punctuation
     marks from a string. Spaces do not count as punctuation and should
